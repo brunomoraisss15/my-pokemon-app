@@ -4,6 +4,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { SettingsProvider } from "@/contexts/SettingsContext";
 import { MyThemeProvider } from "@/contexts/ThemeProvider";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({
   children,
@@ -27,6 +28,18 @@ export default function RootLayout({
           <SettingsProvider>
             <MyThemeProvider>
               <QueryClientProvider client={queryClient}>
+                <Toaster
+                  position="bottom-right"
+                  reverseOrder={false}
+                  toastOptions={{
+                    className: '',
+                    duration: 2000,
+                    style: {
+                      background: '#0d1117',
+                      color: '#fff',
+                    }
+                  }}
+                />
                 {children}
               </QueryClientProvider>
             </MyThemeProvider>

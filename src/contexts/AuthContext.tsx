@@ -3,6 +3,7 @@ import { auth } from "@/services/firebase";
 import { GoogleAuthProvider, browserLocalPersistence, createUserWithEmailAndPassword, getAuth, setPersistence, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { usePathname, useRouter } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
+import toast from 'react-hot-toast';
 
 interface signInSubmitFormsType {
     email: string;
@@ -32,27 +33,23 @@ export const AuthProvider = ({children}: React.PropsWithChildren) => {
 
     const handleGoogleSignIn = async () => {
         const provider = new GoogleAuthProvider()
-        await signInWithPopup(auth, provider).then((response) => {
-            console.log('Log In - Success - Google')
-        }).catch((error) => console.log(error))
+        await signInWithPopup(auth, provider)
         await setPersistence(auth, browserLocalPersistence)
-
     }
 
     
     const handleSubmitForm = async (values: signInSubmitFormsType) => {
-        console.log(values)
-        await signInWithEmailAndPassword(auth, values.email, values.password).then((response) => {
-            console.log('Log In - Success - Email and Password')
-           
-        })
+        try {
+        await signInWithEmailAndPassword(auth, values.email, values.password)
         await setPersistence(auth, browserLocalPersistence)
-        
+        }
+        catch {
+            toast.error('Invalid Email or Password')
+        }
     }
 
     const handleSignOut = async () => {
         signOut(auth)
-        console.log('Log Out - Success')
         setUserInfo({})
         setIsLogged(false)
         setIsLoading(true)
@@ -61,11 +58,13 @@ export const AuthProvider = ({children}: React.PropsWithChildren) => {
     }
 
     const handleSignUpSubmit = async (values: signUpSubmitFormsType) => {
-        console.log(values)
-        await createUserWithEmailAndPassword(auth, values.email, values.password).then((response) => {
-            console.log(response)
-        }).catch((error) => console.log(error))
+        try {
+        await createUserWithEmailAndPassword(auth, values.email, values.password)
         handleUpdate(values.firstName, values.lastName)
+        }
+        catch {
+        toast.error('Error. Check for typos or try again later!')
+        }
         
     }
 
@@ -74,6 +73,7 @@ export const AuthProvider = ({children}: React.PropsWithChildren) => {
         await updateProfile(checkauth?.currentUser, {
             displayName: `${firstName} ${lastName}`
         })
+        toast.success('Success!')
         router.push('/signin')
     }
 
@@ -82,20 +82,28 @@ export const AuthProvider = ({children}: React.PropsWithChildren) => {
           if (user) {
             setIsLogged(true)
             setUserInfo(user)
-            console.log(user)
             setIsLoading(false)
           }
           else {
             
             pathname !== '/signup' && router.push('/signin')
-            console.log('User is not logged')
             setIsLoading(false)
           }
         })
     }, [])
 
     return (
-        <AuthContext.Provider value={{handleSubmitForm, handleGoogleSignIn, handleSignOut, handleSignUpSubmit, isLogged, userInfo, isLoading}}>
+        <AuthContext.Provider
+            value={{
+                setIsLoading,
+                handleSubmitForm,
+                handleGoogleSignIn,
+                handleSignOut,
+                handleSignUpSubmit,
+                isLogged,
+                userInfo,
+                isLoading
+        }}>
             {children}
         </AuthContext.Provider>
     )

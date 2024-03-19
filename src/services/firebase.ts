@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app"
 import { GoogleAuthProvider, getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDOjdCYKGnjzpRHBGRhFLuGLaePxLBzLfw",
-  authDomain: "my-pokemon-7a7b3.firebaseapp.com",
-  projectId: "my-pokemon-7a7b3",
-  storageBucket: "my-pokemon-7a7b3.appspot.com",
-  messagingSenderId: "53910998034",
-  appId: "1:53910998034:web:5fdf2aaa748466d2d1dccb"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig)

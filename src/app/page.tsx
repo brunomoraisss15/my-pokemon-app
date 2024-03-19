@@ -3,7 +3,8 @@
 import { BaseLayout } from "@/components/base-layout/BaseLayout";
 import { usePokemonListQuery } from "@/services/api/queries/use-pokemon-list-query";
 import { nameFirstLetterToUpperrCase } from "@/utils/string";
-import { Box, Card, Divider, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Card, Divider, Link, Pagination, Stack, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { Fragment, useState } from "react";
 
 
@@ -15,6 +16,8 @@ interface PokemonItem {
 export const Home = () => {
 
   const {isLoading, data} = usePokemonListQuery()
+
+  const router = useRouter()
 
   const pokemonList = data?.data?.results
 
@@ -45,39 +48,46 @@ export const Home = () => {
           }}>
         {pokemonList.map((item: PokemonItem, index: number) => {
           return (
-            <Card 
+            <Link
+              onClick={() => router.push(item.name)}
               key={index}
               sx={{
-                width: '200px',
-                height: '300px',
-                borderRadius: '10px'
-                }}>
-                <Box sx={{
-                  width: '100%',
-                  height: '200px',
-                  marginBottom: '40px',
-                  paddingTop: '8px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  '& img': {
-                    width: '90%',
-                    height: '200px'
-                  }
-                }}>
-                  <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${index + 1}.svg`} />
-                </Box>
-                <Divider />
-                <Typography
-                  variant='h5'
-                  align='center'
-                  sx={{
-                    marginTop: '12px'
-                  }}
-                  >
-                  {`#${index + 1}${nameFirstLetterToUpperrCase(item.name, false)}`}
-                </Typography>
-            
-            </Card>
+              textDecoration: 'none'
+            }}>
+              <Card 
+                sx={{
+                  width: '200px',
+                  height: '300px',
+                  borderRadius: '10px',
+                  cursor: 'pointer'
+                  }}>
+                  <Box sx={{
+                    width: '100%',
+                    height: '200px',
+                    marginBottom: '40px',
+                    paddingTop: '8px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    '& img': {
+                      width: '90%',
+                      height: '200px'
+                    }
+                  }}>
+                    <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${index + 1}.svg`} />
+                  </Box>
+                  <Divider />
+                  <Typography
+                    variant='h5'
+                    align='center'
+                    sx={{
+                      marginTop: '12px'
+                    }}
+                    >
+                    {`#${index + 1} ${nameFirstLetterToUpperrCase(item.name, false)}`}
+                  </Typography>
+              
+              </Card>
+            </Link>
           )
         }).slice((page - 1)*10, ((page-1)*10 + 10))
         

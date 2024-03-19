@@ -30,8 +30,6 @@ useEffect(() => {
     setDarkMode(localStorage.getItem('darkMode'))
 }, [])
 
-console.log(darkMode)
-
     return(
       <SettingsContext.Provider value={{ darkMode, changeThemeMode, drawerOpened, toggleDrawer }}>
             {children}

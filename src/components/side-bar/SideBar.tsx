@@ -66,11 +66,23 @@ export const SideBar = () => {
                     </Box>
                 </Link>
                 <Stack justifyContent='center' alignItems='center'>
-                        <Typography sx={{fontFamily:'Changa One', fontSize: '18px'}} className="dash-text-general-style">
+                        <Typography
+                            sx={{
+                                fontFamily:'Changa One',
+                                fontSize: '18px'
+                                }}
+                            className="dash-text-general-style"
+                        >
                             My Pokemon
                         </Typography>
-                        <Typography sx={{ fontSize: '10px', color: theme.palette.grey[400] }} alignSelf='flex-start'>
-                            Find Your Pokemon
+                        <Typography
+                            sx={{
+                                fontSize: '10px',
+                                color: theme.palette.grey[400]
+                                }}
+                            alignSelf='flex-start'
+                        >
+                            CyberLabs
                         </Typography>
                 </Stack>
             </Stack>
@@ -125,7 +137,17 @@ export const SideBar = () => {
                     )
                 })}
             </Stack>
-            <Box sx={{position: 'absolute', bottom: '16px', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', width: '100%' }}>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    bottom: '16px',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                    width: '100%'
+                    }}
+            >
                 <Typography color={theme.palette.grey[600]} sx={{fontSize: "16px"}}>
                     Dark Mode?
                 </Typography>

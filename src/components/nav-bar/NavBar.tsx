@@ -3,32 +3,60 @@ import { SignOutIcon } from "@/assets/icons/sign-out-icon"
 import { AuthContext } from "@/contexts/AuthContext"
 import { SettingsContext } from "@/contexts/SettingsContext"
 import { usePopover } from "@/hooks/usePopover"
-import { Avatar, Box, Button, IconButton, Link, ListItemIcon, MenuItem, Popover, Stack, SvgIcon, Typography, useMediaQuery, useTheme } from "@mui/material"
+import { getFirstLetter } from "@/utils/string"
+import { Avatar, Box, IconButton, Link, ListItemIcon, MenuItem, Popover, Stack, SvgIcon, Typography, useMediaQuery, useTheme } from "@mui/material"
 import { useContext } from "react"
 
 
 
 export const NavBar = () => {
+
     const { open, handleClose, handleOpen, anchorRef} = usePopover()
+
     const { handleSignOut, userInfo }: any = useContext(AuthContext)
+
     const { toggleDrawer }: any = useContext(SettingsContext)
+
     const arrayName: Array<string> | string = userInfo?.displayName ? userInfo?.displayName.split(' ') : ''
+
     const firstName: string = arrayName.length >= 1 ? arrayName[0] : ''
+
     const lastName: string = arrayName.length > 1 ? arrayName[arrayName.length - 1] : ''
+
     const email: string = userInfo?.email
-    
-    const getFirstLetter = (value:any) => {
-        return value ? value[0].toUpperCase() : ''
-    }
+
     const theme = useTheme()
+
     const mdUp = useMediaQuery(theme.breakpoints.up('md'))
-    console.log(arrayName)
+
     return (
-        <Box sx={{height: '64px', padding: '12px 32px 12px 16px', width: '100%'}}>
-            <Stack justifyContent={!mdUp ? 'space-between' : 'flex-end'} direction='row' alignItems='center'>
+        <Box
+            sx={{
+                height: '64px',
+                padding: '12px 32px 12px 16px',
+                width: '100%'
+                }}
+        >
+            <Stack
+                justifyContent={!mdUp ? 'space-between' : 'flex-end'}
+                direction='row'
+                alignItems='center'
+            >
             {!mdUp &&
-                <IconButton onClick={toggleDrawer} sx={{ width: '40px', height: '40px'}}>
-                    <Box sx={{color: 'darkOrange', position: 'relative', top: '3.5px'}}>
+                <IconButton
+                    onClick={toggleDrawer}
+                    sx={{
+                        width: '40px',
+                        height: '40px'
+                        }}
+                >
+                    <Box
+                        sx={{
+                            color: 'darkOrange',
+                            position: 'relative',
+                            top: '3.5px'
+                            }}
+                    >
                         <MenuListIcon />
                     </Box>
                 </IconButton>
@@ -49,6 +77,7 @@ export const NavBar = () => {
             </Stack>
             <Popover
                 open={open}
+                disableScrollLock
                 onClose={handleClose}
                 anchorEl={anchorRef}
                 anchorOrigin={{
@@ -63,7 +92,16 @@ export const NavBar = () => {
                         position: 'relative'
                     }
                     }}>
-                <Stack direction='column' justifyContent='space-between' alignItems='center' sx={{width: 'auto', margin: '16px 16px 0 16px'}} spacing={1}>
+                <Stack
+                    direction='column'
+                    justifyContent='space-between'
+                    alignItems='center'
+                    sx={{
+                        width: 'auto',
+                        margin: '16px 16px 0 16px'
+                        }}
+                    spacing={1}
+                >
                     <Avatar
                     src={userInfo?.photoURL}
                     sx={{
