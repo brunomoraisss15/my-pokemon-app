@@ -3,7 +3,7 @@
 import { BaseLayout } from "@/components/base-layout/BaseLayout";
 import { usePokemonListQuery } from "@/services/api/queries/use-pokemon-list-query";
 import { nameFirstLetterToUpperrCase } from "@/utils/string";
-import { Box, Card, Divider, Link, Pagination, Stack, Typography } from "@mui/material";
+import { Box, Card, Divider, Link, Pagination, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { Fragment, useState } from "react";
 
@@ -22,6 +22,10 @@ export const Home = () => {
   const pokemonList = data?.data?.results
 
   const [page, setPage] = useState<number>(1)
+
+  const theme = useTheme()
+
+  const smUp = useMediaQuery(theme.breakpoints.up('sm'))
 
 
 
@@ -101,7 +105,7 @@ export const Home = () => {
       }
         <Pagination
           count={pokemonList && Math.ceil(pokemonList?.length/10)}
-          size="large"
+          size={smUp ? 'large' : 'small'}
           color='primary'
           onChange={(_, value) => handlePageChange(value)}
           page={page}

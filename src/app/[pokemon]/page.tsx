@@ -50,7 +50,7 @@ const Page = ({params}: any) => {
 
     const [abilityText, setAbilityText] = useState<string>('Click on the chip above to see the info here.')
 
-    const [moveText, setMoveText] = useState<MoveObject>({} as MoveObject)
+    const [moveText, setMoveText] = useState<MoveObject>({moveTitle: '', moveInfo: 'Loading...'})
 
     const [moveChipsQuantity, setMoveChipsQuantity] = useState<number>(20)
 
@@ -261,13 +261,23 @@ const Page = ({params}: any) => {
                 open={movePopover.open}
                 keepMounted
                 disableScrollLock
-                onClose={movePopover.handleClose}
+                onClose={() => {
+                    movePopover.handleClose()
+                    setTimeout(() => {
+                        setMoveText({moveTitle: '', moveInfo: 'Loading...'})
+                    }, 300)
+                }}
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle>{moveText.moveTitle}</DialogTitle>
                 <IconButton
                 aria-label="close"
-                onClick={movePopover.handleClose}
+                onClick={() => {
+                    movePopover.handleClose()
+                    setTimeout(() => {
+                        setMoveText({moveTitle: '', moveInfo: 'Loading...'})
+                    }, 200)
+                    }}
                 sx={{
                     position: 'absolute',
                     right: 8,
