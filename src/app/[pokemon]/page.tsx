@@ -7,8 +7,8 @@ import { CenteredCircularProgress } from "@/components/circular-loading/Centered
 import { usePopover } from "@/hooks/usePopover";
 import { usePokemonInfoQuery } from "@/services/api/queries/use-pokemon-info-query";
 import { shadeColor } from "@/utils/functions";
-import { nameFirstLetterToUpperrCase, splitByHiphenAndFirstLetterUpperrCase } from "@/utils/string";
-import { Box, Button, Card, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, LinearProgress, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { splitByHiphenAndFirstLetterUpperrCase } from "@/utils/string";
+import { Box, Button, Card, Chip, Dialog, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, LinearProgress, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import axios from "axios";
 import { Fragment, useState } from "react";
 
@@ -50,7 +50,9 @@ const Page = ({params}: any) => {
 
     const [abilityText, setAbilityText] = useState<string>('Click on the chip above to see the info here.')
 
-    const [moveText, setMoveText] = useState<MoveObject>({moveTitle: '', moveInfo: 'Loading...'})
+    const [moveText, setMoveText] = useState<MoveObject>({} as MoveObject)
+
+    const [moveTextIsLoading, setMoveTextIsLoading] = useState<boolean>(true)
 
     const [moveChipsQuantity, setMoveChipsQuantity] = useState<number>(20)
 
@@ -71,6 +73,7 @@ const Page = ({params}: any) => {
         const pokeMove = await axios.get(name)
         const pokeMoveEnglish = pokeMove.data.flavor_text_entries.filter((item: any) => item.language.name === 'en')
         setMoveText({moveInfo: pokeMoveEnglish[pokeMoveEnglish.length - 1].flavor_text, moveTitle: title})
+        setMoveTextIsLoading(false)
     }
     
     return (
@@ -264,18 +267,18 @@ const Page = ({params}: any) => {
                 onClose={() => {
                     movePopover.handleClose()
                     setTimeout(() => {
-                        setMoveText({moveTitle: '', moveInfo: 'Loading...'})
+                        setMoveTextIsLoading(true)
                     }, 300)
                 }}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle>{moveText.moveTitle}</DialogTitle>
+                <DialogTitle>{moveTextIsLoading ? '' : moveText.moveTitle}</DialogTitle>
                 <IconButton
                 aria-label="close"
                 onClick={() => {
                     movePopover.handleClose()
                     setTimeout(() => {
-                        setMoveText({moveTitle: '', moveInfo: 'Loading...'})
+                        setMoveTextIsLoading(true)
                     }, 200)
                     }}
                 sx={{
@@ -289,7 +292,7 @@ const Page = ({params}: any) => {
                 </IconButton>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    {moveText.moveInfo}
+                    {moveTextIsLoading ? 'Loading...' : moveText.moveInfo}
                 </DialogContentText>
                 </DialogContent>
             </Dialog>
