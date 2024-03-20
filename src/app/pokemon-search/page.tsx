@@ -166,30 +166,33 @@ export const PokeSearch = () => {
                   }}>
                 <Stack direction={downEightHdth ? 'column' : 'row'} justifyContent='space-between' width='100%'>
                   <Stack direction='row' justifyContent='flex-start' width={downEightHdth ? '100%' : '50%'}>
-                      <Box sx={{
-                        height: '600px',
-                        width: '100%',
-                        paddingTop: '8px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        '& img': {
-                          maxWidth: '60%'
-                        }
-                      }}>
+                  <Box
+                    sx={{
+                      height: '600px',
+                      width: '100%',
+                      paddingTop: '8px',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      padding: '24px',
+                      '& img': {
+                        maxWidth: '60%',
+                        flexGrow: 10,
+                      }
+                    }}>
+                      <Stack direction='column' justifyContent='center' width='100%' alignItems='center'>
                         <Typography
                           variant="h4"
                           sx={{
-                            position: 'absolute',
-                            top: '24px',
-                            left: '32px',
-                            zIndex: 1,
-                            fontWeight: 600
-                          }}>
+                            fontWeight: 600,
+                            wordBreak: 'break-word',
+                            alignSelf: 'flex-start',
+                           
+                        }}>
                           {`#${pokemonInfo.data.id} ${splitByHiphenAndFirstLetterUpperrCase(pokemonInfo.data.name)}`}
                         </Typography>
                         <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonInfo.data.id}.svg`} />
-                        
-                      </Box>
+                      </Stack>
+                    </Box>
                     <span>
                       <Divider orientation="vertical" />
                     </span>

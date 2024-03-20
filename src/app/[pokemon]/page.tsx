@@ -100,23 +100,24 @@ const Page = ({params}: any) => {
                                     paddingTop: '8px',
                                     display: 'flex',
                                     justifyContent: 'center',
+                                    padding: '24px',
                                     '& img': {
-                                    maxWidth: '60%'
+                                    maxWidth: '60%',
+                                    flexGrow: 10
                                     }
                                 }}>
-                                    <Typography
-                                    variant="h4"
-                                    sx={{
-                                        position: 'absolute',
-                                        top: '24px',
-                                        left: '32px',
-                                        zIndex: 1,
-                                        fontWeight: 600
-                                    }}>
-                                    {`#${pokemonData.id} ${nameFirstLetterToUpperrCase(pokemonData.name, false)}`}
-                                    </Typography>
-                                    <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonData.id}.svg`} />
-                                    
+                                    <Stack direction='column' justifyContent='center' alignItems='center' width='100%'>
+                                        <Typography
+                                        variant="h4"
+                                        sx={{
+                                            fontWeight: 600,
+                                            wordBreak: 'break-word',
+                                            alignSelf: 'flex-start'
+                                        }}>
+                                        {`#${pokemonData.id} ${splitByHiphenAndFirstLetterUpperrCase(pokemonData.name)}`}
+                                        </Typography>
+                                        <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonData.id}.svg`} />
+                                    </Stack>
                                 </Box>
                                 <span>
                                 <Divider orientation="vertical" />

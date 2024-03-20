@@ -52,14 +52,18 @@ export const Home = () => {
               onClick={() => router.push(item.name)}
               key={index}
               sx={{
-              textDecoration: 'none'
+              textDecoration: 'none',
             }}>
               <Card 
                 sx={{
                   width: '200px',
                   height: '300px',
                   borderRadius: '10px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                      ':hover': {
+                        transform: 'scale(1.05)'
+                      }
                   }}>
                   <Box sx={{
                     width: '100%',
