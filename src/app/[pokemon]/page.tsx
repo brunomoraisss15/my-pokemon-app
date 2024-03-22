@@ -10,6 +10,7 @@ import { shadeColor } from "@/utils/functions";
 import { splitByHiphenAndFirstLetterUpperrCase } from "@/utils/string";
 import { Box, Button, Card, Chip, Dialog, DialogContent, DialogContentText, DialogTitle, Divider, IconButton, LinearProgress, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import axios from "axios";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { Fragment, useState } from "react";
 
 
@@ -30,7 +31,7 @@ interface StateInfo {
 
 interface Move {
     move: {name: string; url: string};
-    version_group_details?: any;
+    version_group_details?: any; 
 }
 
 interface MoveObject {
@@ -38,7 +39,7 @@ interface MoveObject {
     moveTitle: string;
 }
 
-const Page = ({params}: any) => {
+const Page = ({params}: Params) => {
 
     //Próximo passo seria componentizar o código repetido, como o abaixo que se repete no pokemon-search.
 
@@ -69,7 +70,7 @@ const Page = ({params}: any) => {
         setAbilityText(pokeAbility.data.flavor_text_entries[pokeAbility.data.flavor_text_entries.length - 1].flavor_text)
       }
 
-    const handleChipMoveClick = async (name: string, title:string) => {
+    const handleChipMoveClick = async (name: string, title: string) => {
         const pokeMove = await axios.get(name)
         const pokeMoveEnglish = pokeMove.data.flavor_text_entries.filter((item: any) => item.language.name === 'en')
         setMoveText({moveInfo: pokeMoveEnglish[pokeMoveEnglish.length - 1].flavor_text, moveTitle: title})

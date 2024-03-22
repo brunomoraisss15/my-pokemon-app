@@ -15,7 +15,7 @@ const SignUp = () => {
 
     const {handleSubmit, register, formState: {errors}} = signUpValidation()
 
-    const { handleSignUpSubmit, isLogged, isLoading }:any = useContext(AuthContext)
+    const { handleSignUpSubmit, isLogged, isLoading } = useContext(AuthContext)
 
     return (
         <Fragment>

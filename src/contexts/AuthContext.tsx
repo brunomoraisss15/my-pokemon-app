@@ -18,7 +18,20 @@ interface signUpSubmitFormsType {
     matchPassword: string;
 }
 
-export const AuthContext = createContext({})
+interface AuthContextType {
+    isLoading?: boolean;
+    setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+    handleSubmitForm: any; // Any to prevent problem with YUP authentication
+    handleGoogleSignIn?(): any; // Receives nothing and gives nothing
+    handleSignOut?(): any; // Receives nothing and gives nothing
+    handleSignUpSubmit: any; // Any to prevent problem with YUP authentication
+    isLogged: boolean;
+    userInfo: any;
+
+
+}
+
+export const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 
 export const AuthProvider = ({children}: React.PropsWithChildren) => {
 
@@ -91,6 +104,19 @@ export const AuthProvider = ({children}: React.PropsWithChildren) => {
           }
         })
     }, [])
+
+    interface AuthContextType {
+        isLoading?: boolean;
+        setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+        handleSubmitForm?(values: signInSubmitFormsType): any;
+        handleGoogleSignIn?(): any;
+        handleSignOut?(): any;
+        handleSignUpSubmit?(values: signUpSubmitFormsType): any;
+        isLogged: boolean;
+        userInfo: any;
+
+
+    }
 
     return (
         <AuthContext.Provider

@@ -13,9 +13,9 @@ export const NavBar = () => {
 
     const { open, handleClose, handleOpen, anchorRef} = usePopover()
 
-    const { handleSignOut, userInfo }: any = useContext(AuthContext)
+    const { handleSignOut, userInfo } = useContext(AuthContext)
 
-    const { toggleDrawer }: any = useContext(SettingsContext)
+    const { toggleDrawer } = useContext(SettingsContext)
 
     const arrayName: Array<string> | string = userInfo?.displayName ? userInfo?.displayName.split(' ') : ''
 

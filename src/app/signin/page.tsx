@@ -11,7 +11,7 @@ import { Fragment, useContext} from "react"
 
 const SignIn = () => {
 
-    const { isLogged, handleGoogleSignIn, handleSubmitForm, isLoading}:any = useContext(AuthContext)
+    const { isLogged, handleGoogleSignIn, handleSubmitForm, isLoading} = useContext(AuthContext)
 
     const router = useRouter()
 

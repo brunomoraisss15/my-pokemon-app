@@ -28,7 +28,7 @@ const dashItems = [
 
 
 export const SideBar = () => {
-    const { darkMode, changeThemeMode, drawerOpened, toggleDrawer }: any = useContext(SettingsContext)
+    const { darkMode, changeThemeMode, drawerOpened, toggleDrawer } = useContext(SettingsContext)
     const pathname = usePathname()
     const theme = useTheme()
     const mdUp = useMediaQuery(theme.breakpoints.up('md'))

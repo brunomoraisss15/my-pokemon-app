@@ -9,7 +9,7 @@ import { MyThemeContextType } from "@/types/MyThemeContextType";
 
 export const MyThemeProvider = ({children}: React.PropsWithChildren) => {  
 
-    const { darkMode }: any = useContext(SettingsContext)
+    const { darkMode } = useContext(SettingsContext)
 
     const themeOptions: ThemeOptions = {
       palette: {

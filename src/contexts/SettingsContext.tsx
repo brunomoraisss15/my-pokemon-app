@@ -1,13 +1,21 @@
 'use client'
 import { createContext, useEffect, useRef, useState } from "react";
 
+interface SetttingsContextType {
+    darkMode?: boolean | null | string;
+    changeThemeMode?(): any; // Receives nothing and gives nothing
+    drawerOpened?: boolean;
+    toggleDrawer?(): any; // Receives nothing and gives nothing
 
-export const SettingsContext = createContext({})
+}
+
+
+export const SettingsContext = createContext<SetttingsContextType>({} as SetttingsContextType)
 
 export const SettingsProvider = ({children}: React.PropsWithChildren): React.ReactNode => {
 
       
-const [darkMode, setDarkMode] = useState<boolean | null | string >(false)
+const [darkMode, setDarkMode] = useState<boolean | null | string>(false)
 
 const [drawerOpened, setDrawerOpened] = useState<boolean>(false)
 

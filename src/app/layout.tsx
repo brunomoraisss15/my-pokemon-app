@@ -33,7 +33,7 @@ export default function RootLayout({
                   reverseOrder={false}
                   toastOptions={{
                     className: '',
-                    duration: 2000,
+                    duration: 3000,
                     style: {
                       background: '#0d1117',
                       color: '#fff',
