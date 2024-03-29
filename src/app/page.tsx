@@ -3,9 +3,9 @@
 import { BaseLayout } from "@/components/base-layout/BaseLayout";
 import { usePokemonListQuery } from "@/services/api/queries/use-pokemon-list-query";
 import { nameFirstLetterToUpperrCase } from "@/utils/string";
-import { Box, Card, Divider, Link, Pagination, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Card, Divider, Link, Pagination, Stack, Switch, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 
 interface PokemonItem {
@@ -14,6 +14,10 @@ interface PokemonItem {
 }
 
 export const Home = () => {
+
+  const [addItems, setaddItems] = useState(0)
+
+  const [infinityScrollMode, setInfinityScrollMode] = useState(false)
 
   const {isLoading, data} = usePokemonListQuery()
 
@@ -27,19 +31,42 @@ export const Home = () => {
 
   const smUp = useMediaQuery(theme.breakpoints.up('sm'))
 
-
+  const handleSwitchScroll = () => {
+    setInfinityScrollMode((previous) => !previous)
+    setPage(1)
+    setaddItems(0)
+  }
 
   const handlePageChange = (value: number) => {
     setPage(value)
   }
 
+  useEffect(() => {
+    document.body.addEventListener('scroll', (_) => {
+      const scrollTop:number = document.body.scrollTop
+      const innerHeight:number = window.innerHeight
+      const scrollHeight:number = document.body.scrollHeight
+      if (scrollTop + innerHeight === scrollHeight) {
+        setaddItems((previous) => previous + 5)
+      }
+    })
+  }, [])
+
   return (
     <BaseLayout>
       {!isLoading &&
         <Fragment>
-        <Typography variant='h4' fontWeight={600}>
-          Pokemon List
-        </Typography>
+        <Stack direction='row' justifyContent='space-between'>
+          <Typography variant='h4' fontWeight={600}>
+            Pokemon List
+          </Typography>
+          <Stack direction='row' spacing={1} alignItems='center'>
+            <Typography sx={{fontSize: '14px'}}>
+              {'Infinity Scroll?'}
+            </Typography>
+            <Switch checked={infinityScrollMode} onChange={handleSwitchScroll} />
+          </Stack>
+        </Stack>
         <Stack
           direction='row'
           flexWrap='wrap'
@@ -97,13 +124,15 @@ export const Home = () => {
               </Card>
             </Link>
           )
-        }).slice((page - 1)*10, ((page-1)*10 + 10))
+        }).slice((page - 1)*10, infinityScrollMode ? (((page-1)*10 + 10 + addItems)) : ((page-1)*10 + 10))
         
         }
         </Stack>
         </Fragment>
       }
+      {!infinityScrollMode &&
         <Pagination
+        
           count={pokemonList && Math.ceil(pokemonList?.length/10)}
           size={smUp ? 'large' : 'small'}
           color='primary'
@@ -114,6 +143,7 @@ export const Home = () => {
             justifyContent: 'center',
             paddingY: '24px'
           }}/>
+        }
     </BaseLayout>
   )
 }
